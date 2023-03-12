@@ -1,5 +1,5 @@
 '''
-Simple 
+Simple client to send guess number to server
 '''
 import socket
 
@@ -7,7 +7,12 @@ HOST = 'localhost'
 PORT = 5555
 
 
-def read_input():
+def read_input() -> int:
+    """read int from input
+
+    Returns:
+        int: number
+    """
     while True:
         try:
             guess = int(input('Введите число: '))
@@ -17,9 +22,11 @@ def read_input():
 
 
 def run_client():
+    """Simple tcp client: send "GUESS <int>" and recv result
+    """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        print('Подключились к серверу')
+        print('Подключение к серверу')
         while True:
             guess = read_input()
             s.sendall(f'GUESS {guess}'.encode())
